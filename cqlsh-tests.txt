@@ -1,0 +1,43 @@
+# creating a new keyspace
+cqlsh:
+
+cqlsh> CREATE KEYSPACE apimanagerv77 WITH
+        replication = {'class': 'SimpleStrategy',
+          'replication_factor': '3'}
+        AND durable_writes = true;
+
+cqlsh> desc keyspace apimanagerv77;
+
+cqlsh> use apimanagerv77;
+cqlsh:apimanagerv77> CREATE TABLE healthcheck (
+         key text PRIMARY KEY,
+         intdata bigint,
+         txtdata text );
+
+# How to generate some test data? (using bash)
+for i in {1..200}
+do
+  echo "inserting entry ${i}"
+  /opt/axway/apim753/cassandra/bin/cqlsh
+  -e "use apimanagerv77; insert into healthcheck (key, intdata, txtdata) values ('$(uuidgen)', $((${i}+1000)), 'some data ${i}')" 10.0.0.5 9042
+  sleep 0.5
+done
+
+# check if replication strategy works
+# commands can be run on any cassandra node via cqlsh
+
+cqlsh:apimanagerv77> select count(key) from healthcheck;
+
+cqlsh:apimanagerv77> select * from healthcheck;
+
+cqlsh:apimanagerv77> consistency;
+Current consistency level is ONE.
+cqlsh:apimanagerv77> consistency local_quorum;
+Consistency level set to LOCAL_QUORUM.
+
+# now shutdown one Cassandra instance and run qureies again!
+# change consistency to ALL...should result in:
+cqlsh:apimanagerv77>  consistency all;
+Consistency level set to ALL.
+cqlsh:apimanagerv77> select * from healthcheck;
+NoHostAvailable:
