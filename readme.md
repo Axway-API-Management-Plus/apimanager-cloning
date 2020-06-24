@@ -318,6 +318,9 @@ Right now the Axway API-Management client tools *Policy Studio* and *Configurati
 ```> set __COMPAT_LAYER=RunAsInvoker```
 4) Start the installer executable and install the packages.
 
+Now, one could also run the installer in unattended mode and provide the tools via a script.<br/>
+```> APIGateway_7.7.20200130_Client-Tools-Install_win-x86-32_BN02.exe --installer-language en --help```
+
 More details on this approach and the security implications can be found here [What does '__COMPAT_LAYER' actually do?](https://stackoverflow.com/questions/37878185/what-does-compat-layer-actually-do#:~:text=Setting%20__COMPAT_LAYER%20to%20RunAsInvoker,as%20whatever%20user%20called%20it.). - *last visited: 24th June 2020*
 
 
