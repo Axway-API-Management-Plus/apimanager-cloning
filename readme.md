@@ -306,6 +306,21 @@ For cloning and correct backup for a disaster recovery it is important to unders
 Following the procedure outlined above we are able to completely clone an environment. This allows for a faster, more simple switch between major versions. In case of breaking changes are applied at the database structure on Cassandra keyspace it still allowes to quickly switch back to the original setup in case anything should go wrong during such version upgrade. This switch just requires shutdown of the faulty installation and restart of the original environment.
 
 
+## Axway API-Management Client Tools
+
+At some customer environments installing the Axway API-Management on a Windows workstation can be tricky because of centrally managed workstation environments with special rules set and centralized software distribution in place.
+
+Right now the Axway API-Management client tools *Policy Studio* and *Configuration Studio* are only provided as Installer packages for the Windows platform. If those cannot be run on a developer workstation one can instruct the installer to run as normal user. For this installer package this is possible as it just needs ti unpack the Eclipse based client applications from the installer archive but no further Windows system modifications like accessing the registry are required.
+
+1) Download the installer from the Axway support portal
+2) Open a command line.
+3) Set the environment variable "__COMPAT_LAYER" to "RunAsInvoker"<br/>
+```> set __COMPAT_LAYER=RunAsInvoker```
+4) Start the installer executable and install the packages.
+
+More details on this approach and the security implications can be found here [What does '__COMPAT_LAYER' actually do?](https://stackoverflow.com/questions/37878185/what-does-compat-layer-actually-do#:~:text=Setting%20__COMPAT_LAYER%20to%20RunAsInvoker,as%20whatever%20user%20called%20it.). - *last visited: 24th June 2020*
+
+
 ## Other tools for Cassandra Backup / Restore handling
 
 Medusa is an Apache Cassandra backup system developed by TLP (now DataStax).
